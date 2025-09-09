@@ -13,6 +13,19 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true,
+    },
+     googleId: {
+        type: String,
+        sparse: true // Allows multiple documents without this field
+    },
+    avatar: {
+        type: String,
+        default: null
+    },
+    authProvider: {
+        type: String,
+        enum: ['email', 'google'],
+        default: 'email'
     }
 }, {timestamps:true} )
 

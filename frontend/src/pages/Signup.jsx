@@ -1,6 +1,5 @@
-//Signup page
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const Signup = () => {
@@ -35,10 +34,8 @@ const Signup = () => {
       return;
     }
 
-    // Normally send data to backend here
- 
-     try {
-       const res = await fetch('http://localhost:5000/api/auth/signup', {
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/signup', {
         method:'POST',
         headers:{
           'Content-Type':'application/json',
@@ -48,30 +45,32 @@ const Signup = () => {
           email,
           password
         }),
-       });
+      });
 
       const data = await res.json();
        
       if(data.success){
-        toast.success('Signup sucessful!')
+        toast.success('Signup successful!')
         navigate('/login')
       }
       else{
         toast.error(data.message || 'signup failed')
       }
-     } catch (error) {
+    } catch (error) {
       toast.error('Error signing up');
       console.log(error)
-     }
+    }
+  };
 
-    // toast.success('Signup successful!');
-    // navigate('/dashboard'); // ✅ Redirect to Dashboard after signup
+  // Handle Google OAuth - ADD THIS FUNCTION
+  const handleGoogleSignup = () => {
+    window.location.href = 'http://localhost:5000/auth/google';
   };
 
   return (
     <div className="max-w-md mx-auto p-6 mt-10 mb-30">
-      <h2 className="text-[#1E2A78] text-2xl font-bold mb-4 text-center ">Sign Up</h2>
-      <form onSubmit={handleSubmit} className="space-y-4 ">
+      <h2 className="text-[#1E2A78] text-2xl font-bold mb-4 text-center">Sign Up</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
           name="name"
@@ -94,7 +93,7 @@ const Signup = () => {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
-          className="w-full border border-gray-300  p-2 rounded"
+          className="w-full border border-gray-300 p-2 rounded"
         />
         <input
           type="password"
@@ -111,6 +110,23 @@ const Signup = () => {
           Sign Up
         </button>
       </form>
+
+      {/* Google button OUTSIDE the form with proper click handler */}
+      <button 
+        type="button"
+        onClick={handleGoogleSignup}
+        className="flex items-center gap-2 border border-gray-300 p-2 w-full justify-center rounded cursor-pointer hover:bg-gray-50 transition-colors mt-4"
+      >
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" className="w-5 h-5" />
+        <span>Sign up with Google</span>
+      </button>
+
+      <p className="text-center mt-4 text-sm text-gray-600">
+        Already have an account?{' '}
+        <Link to="/login" className="text-blue-600 hover:underline">
+          Login here
+        </Link>
+      </p>
     </div>
   );
 };

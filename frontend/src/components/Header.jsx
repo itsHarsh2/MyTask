@@ -1,4 +1,6 @@
+// src/components/Header.jsx
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import Search from './Search.jsx'; // Import the new Search component
 
 const Header = ({ searchQuery, setSearchQuery }) => {
   const location = useLocation();
@@ -22,12 +24,10 @@ const Header = ({ searchQuery, setSearchQuery }) => {
         {/* CENTER: Search bar (only show on Dashboard page) */}
         {location.pathname === '/dashboard' && (
           <div className="w-full max-w-md md:mx-auto">
-            <input
-              type="text"
-              placeholder="Search tasks..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full border border-gray-300 rounded-xl px-4 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            {/* Replace the input with the Search component */}
+            <Search 
+              initialQuery={searchQuery}
+              onSearch={setSearchQuery} 
             />
           </div>
         )}

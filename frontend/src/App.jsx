@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard'; 
 import { Toaster } from 'react-hot-toast';
 import { useState } from 'react';
+import AuthSuccess from './components/AuthSucess';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -21,7 +22,9 @@ function App() {
             <Route path="/" element={<Navigate to="/signup" />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard searchQuery={searchQuery} />} />
+            <Route path="/dashboard"
+             element={<Dashboard searchQuery={searchQuery} />} />
+               <Route path="/auth/success" element={<AuthSuccess />} />
           </Routes>
         </main>
 

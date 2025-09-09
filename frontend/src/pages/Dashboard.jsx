@@ -3,6 +3,9 @@ import toast, { Toaster } from 'react-hot-toast';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import api, { getAuthHeaders } from '../api/axios.js';
+import ChatBot from '../components/chatbot.jsx';
+import Search from '../components/Search.jsx';
+
 
 const Dashboard = ({ searchQuery =''}) => {
   const [tasks, setTasks] = useState([]);
@@ -93,7 +96,7 @@ const Dashboard = ({ searchQuery =''}) => {
     <div className="max-w-4xl mx-auto px-4 py-8 mb-20">
       <Toaster position="top-right" reverseOrder={false} />
       <h1 className="text-3xl font-bold text-[#1E2A78] mb-6">Welcome to MyTask Dashboard</h1>
-
+       
       {/* Task Form */}
       <section className="bg-white border border-gray-300 p-6 rounded-lg shadow-sm mb-8">
         <h2 className="text-xl font-semibold mb-4 text-[#1E2A78]">Add New Task</h2>
@@ -201,6 +204,7 @@ const Dashboard = ({ searchQuery =''}) => {
           />
         </div>
       </section>
+      <ChatBot/>
     </div>
   );
 };
