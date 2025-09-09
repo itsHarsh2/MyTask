@@ -7,6 +7,9 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+  const GOOGLE_AUTH_URL = import.meta.env.VITE_GOOGLE_AUTH_URL || 'http://localhost:5000/auth/google';
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -16,11 +19,9 @@ const Login = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       });
 
@@ -39,14 +40,15 @@ const Login = () => {
     }
   };
 
-  // Handle Google OAuth - ADD THIS FUNCTION
+  // ✅ Use env variable for Google OAuth
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:5000/auth/google';
+    window.location.href = GOOGLE_AUTH_URL;
   };
 
   return (
     <div className="max-w-md mx-auto p-6 justify-items-center">
       <h2 className="text-2xl text-[#1E2A78] font-bold mb-4 text-center mt-20">Login to MyTask</h2>
+      
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="email"

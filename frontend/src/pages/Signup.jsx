@@ -11,6 +11,10 @@ const Signup = () => {
     confirmPassword: ''
   });
 
+ 
+  const signupUrl = `${import.meta.env.VITE_API_BASE_URL}/auth/signup`|| 'http://localhost:5000/api/auth/signup';
+  const googleAuthUrl = import.meta.env.VITE_GOOGLE_AUTH_URL || 'http://localhost:5000/auth/google';
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -35,12 +39,12 @@ const Signup = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/signup', {
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json',
+      const res = await fetch(signupUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        body:JSON.stringify({
+        body: JSON.stringify({
           name,
           email,
           password
@@ -49,22 +53,21 @@ const Signup = () => {
 
       const data = await res.json();
        
-      if(data.success){
-        toast.success('Signup successful!')
-        navigate('/login')
-      }
-      else{
-        toast.error(data.message || 'signup failed')
+      if (data.success) {
+        toast.success('Signup successful!');
+        navigate('/login');
+      } else {
+        toast.error(data.message || 'Signup failed');
       }
     } catch (error) {
       toast.error('Error signing up');
-      console.log(error)
+      console.log(error);
     }
   };
 
-  // Handle Google OAuth - ADD THIS FUNCTION
+  // Handle Google OAuth with env
   const handleGoogleSignup = () => {
-    window.location.href = 'http://localhost:5000/auth/google';
+    window.location.href = googleAuthUrl;
   };
 
   return (
@@ -111,7 +114,7 @@ const Signup = () => {
         </button>
       </form>
 
-      {/* Google button OUTSIDE the form with proper click handler */}
+      {/* Google button OUTSIDE the form with env handler */}
       <button 
         type="button"
         onClick={handleGoogleSignup}
